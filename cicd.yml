@@ -1,0 +1,55 @@
+cicd:
+  security:
+    scans:
+      static_analysis: true
+      dynamic_analysis: true
+      dependency_check: true
+    tools:
+      sonarqube: '8.9'
+      trivy: 0.34.0
+      snyk: 2022.11.1
+  vault:
+    address: https://vault.mycompany.com
+    auth_method: approle
+    role_id: abc123
+    secret_id: secret456
+  environments:
+    dev:
+      cluster: dev-cluster-001
+      aws_region: us-west-2
+      role_to_assume: arn:aws:iam::111222333444:role/DevDeployRole
+      image:
+        name: my-app
+        tag: dev-2025.02.18
+      vault:
+        role: dev-vault-role
+        secret_path: secret/data/dev
+      notifications:
+        slack: '#dev-alerts'
+        email: dev-team@example.com
+    nprd:
+      cluster: nprd-cluster-002
+      aws_region: us-east-1
+      role_to_assume: arn:aws:iam::111222333444:role/NprdDeployRole
+      image:
+        name: my-app
+        tag: nprd-2025.02.18
+      vault:
+        role: nprd-vault-role
+        secret_path: secret/data/nprd
+      notifications:
+        slack: '#nprd-alerts'
+        email: nprd-team@example.com
+    prd:
+      cluster: prd-cluster-003
+      aws_region: us-east-1
+      role_to_assume: arn:aws:iam::111222333444:role/ProdDeployRole
+      image:
+        name: my-app
+        tag: prod-2025.02.18
+      vault:
+        role: prod-vault-role
+        secret_path: secret/data/prod
+      notifications:
+        slack: '#prod-alerts'
+        email: prod-team@example.com
