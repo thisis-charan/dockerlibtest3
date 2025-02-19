@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Update YAML Composite Action
-        uses: ./.github/actions/update-yaml@main
+        uses: thisis-charan/dockerlibtest3/.github/actions/update-yaml@main
         with:
           file1-repo: "thisis-charan/dockerlibtest1"  # Repository containing ci.yml
           file1-path: "ci.yml"                         # Path to ci.yml in dockerlibtest1
