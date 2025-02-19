@@ -15,4 +15,20 @@ jobs:
           file2-repo: "thisis-charan/dockerlibtest2"     # Repository containing cd.yml
           file2-path: "cd.yml"                         # Path to cd.yml in dockerlibtest2
           output-path: "cicd.yml"   # Optional: if you want to override the output path
+
+      - name: Commit and Push Updated YAML
+        run: |
+          # Configure Git with a default user
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Add the output file to Git
+          git add cicd.yml
+          
+          # Commit the changes. If no changes, this will fail, so we use || true to ignore that error.
+          git commit -m "Update YAML file via workflow" || echo "No changes to commit"
+          
+          # Push the commit using the provided GITHUB_TOKEN
+          git push
+        shell: bash    
           
