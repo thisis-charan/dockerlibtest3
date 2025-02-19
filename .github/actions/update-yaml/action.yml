@@ -1,0 +1,54 @@
+name: "Update YAML Files"
+description: "Composite Action to update a YAML file (file2) using values from another YAML file (file1) from a different repository."
+inputs:
+  file1-repo:
+    description: "Repository containing file1 (format: owner/repo)"
+    required: true
+  file1-path:
+    description: "Path to file1 within the file1 repository (e.g., ci.yml)"
+    required: true
+  file2-repo:
+    description: "Repository containing file2 (format: owner/repo)"
+    required: true
+  file2-path:
+    description: "Path to file2 within the file2 repository (e.g., cd.yml)"
+    required: true
+  output-path:
+    description: "Output file path. Defaults to file2-path if omitted."
+    required: false
+    default: ""
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout file2 repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.file2-repo }}
+        path: file2-repo
+
+    - name: Checkout file1 repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.file1-repo }}
+        path: file1-repo
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install ruamel.yaml
+      run: |
+        python -m pip install --upgrade pip
+        pip install ruamel.yaml
+
+    - name: Run update YAML script
+      run: |
+        FILE1_PATH="./file1-repo/${{ inputs.file1-path }}"
+        FILE2_PATH="./file2-repo/${{ inputs.file2-path }}"
+        OUTPUT_PATH="${{ inputs.output-path }}"
+        if [ -z "$OUTPUT_PATH" ]; then
+          OUTPUT_PATH="$FILE2_PATH"
+        fi
+        echo "Updating YAML with: FILE1=$FILE1_PATH, FILE2=$FILE2_PATH, OUTPUT=$OUTPUT_PATH"
+        python ./.github/actions/update-yaml/update_yaml_ruamel.py --file1 "$FILE1_PATH" --file2 "$FILE2_PATH" --output "$OUTPUT_PATH"
