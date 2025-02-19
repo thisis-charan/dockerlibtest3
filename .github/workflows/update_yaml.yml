@@ -1,8 +1,6 @@
 name: "Update YAML from dockerlibtest1 to dockerlibtest2"
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -10,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Update YAML Composite Action
-        uses: ./.github/actions/update-yaml
+        uses: ./.github/actions/update-yaml@main
         with:
           file1-repo: "thisis-charan/dockerlibtest1"  # Repository containing ci.yml
           file1-path: "ci.yml"                         # Path to ci.yml in dockerlibtest1
