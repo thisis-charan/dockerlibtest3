@@ -1,21 +1,29 @@
-name: "Update YAML from dockerlibtest1 to dockerlibtest2"
+name: "Update YAML and Commit Output"
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   update-yaml:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the repository that triggered the workflow
+      - name: Checkout current repository
+        uses: actions/checkout@v3
+
+      # Step 2: Run the composite action to update the YAML
       - name: Run Update YAML Composite Action
         uses: thisis-charan/dockerlibtest3/.github/actions/update-yaml@main
         with:
-          file1-repo: "thisis-charan/dockerlibtest1"  # Repository containing ci.yml
+          file1-repo: "thisis-charan/dockerlibtest1"  # Repository with ci.yml
           file1-path: "ci.yml"                         # Path to ci.yml in dockerlibtest1
-          file2-repo: "thisis-charan/dockerlibtest2"     # Repository containing cd.yml
+          file2-repo: "thisis-charan/dockerlibtest2"     # Repository with cd.yml
           file2-path: "cd.yml"                         # Path to cd.yml in dockerlibtest2
-          output-path: "cicd.yml"   # Optional: if you want to override the output path
+          output-path: "cicd.yml"                       # Output file name to be added to this repo
 
+      # Step 3: Commit and push the updated YAML file back to the repository
       - name: Commit and Push Updated YAML
         working-directory: ${{ github.workspace }}
         run: |
@@ -25,3 +33,5 @@ jobs:
           git commit -m "Update YAML file via workflow" || echo "No changes to commit"
           git push
         shell: bash
+
+ 
