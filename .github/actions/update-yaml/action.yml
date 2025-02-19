@@ -52,5 +52,5 @@ runs:
           OUTPUT_PATH="$FILE2_PATH"
         fi
         echo "Updating YAML with: FILE1=$FILE1_PATH, FILE2=$FILE2_PATH, OUTPUT=$OUTPUT_PATH"
-        python "${{ github.workspace }}/.github/actions/update-yaml/update_yaml_ruamel.py" --file1 "$FILE1_PATH" --file2 "$FILE2_PATH" --output "$OUTPUT_PATH"
+        python "${{ github.action_path }}/update_yaml_ruamel.py" --file1 "$FILE1_PATH" --file2 "$FILE2_PATH" --output "$OUTPUT_PATH"
       shell: bash
