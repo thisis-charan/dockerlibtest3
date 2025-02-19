@@ -41,6 +41,7 @@ runs:
       run: |
         python -m pip install --upgrade pip
         pip install ruamel.yaml
+      shell: bash
 
     - name: Run update YAML script
       run: |
@@ -52,3 +53,4 @@ runs:
         fi
         echo "Updating YAML with: FILE1=$FILE1_PATH, FILE2=$FILE2_PATH, OUTPUT=$OUTPUT_PATH"
         python ./.github/actions/update-yaml/update_yaml_ruamel.py --file1 "$FILE1_PATH" --file2 "$FILE2_PATH" --output "$OUTPUT_PATH"
+      shell: bash
