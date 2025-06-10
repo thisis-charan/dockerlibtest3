@@ -15,41 +15,47 @@ cicd:
     secret_id: secret456
   environments:
     dev:
-      cluster: dev-cluster-001
-      aws_region: us-west-2
-      role_to_assume: arn:aws:iam::111222333444:role/DevDeployRole
-      image:
-        name: my-app
-        tag: dev-2025.02.18
-      vault:
-        role: dev-vault-role
-        secret_path: secret/data/dev
-      notifications:
-        slack: '#dev-alerts'
-        email: dev-team@example.com
+      kubernetes:
+        primary:
+          cluster: cddev-cluster-001
+          aws_region: cdus-west-2
+          role_to_assume: cdarn:aws:iam::111222333444:role/DevDeployRole
+          image:
+            name: my-appcd
+            tag: dev-2025.02.18cd
+          vault:
+            role: dev-vault-rolecd
+            secret_path: secret/data/devcd
+          notifications:
+            slack: '#dev-alertscd'
+            email: dev-team@example.comcd
     nprd:
-      cluster: nprd-cluster-002
-      aws_region: us-east-1
-      role_to_assume: arn:aws:iam::111222333444:role/NprdDeployRole
-      image:
-        name: my-appcd
-        tag: nprd-2025.02.18cd
-      vault:
-        role: nprd-vault-role
-        secret_path: secret/data/nprd
-      notifications:
-        slack: '#nprd-alerts'
-        email: nprd-team@example.com
+      kubernetes:
+        primary:
+          cluster: nprd-cluster-002cd
+          aws_region: us-east-1cd
+          role_to_assume: arn:aws:iam::111222333444:role/NprdDeployRolecd
+          image:
+            name: my-appcd
+            tag: nprd-2025.02.18cd
+          vault:
+            role: nprd-vault-rolecd
+            secret_path: secret/data/nprdcd
+          notifications:
+            slack: '#nprd-alertscd'
+            email: nprd-team@example.comcd
     prd:
-      cluster: prd-cluster-003
-      aws_region: us-east-1
-      role_to_assume: arn:aws:iam::111222333444:role/ProdDeployRole
-      image:
-        name: my-appcd
-        tag: prod-2025.02.18cd
-      vault:
-        role: prod-vault-rolecd
-        secret_path: secret/data/prodcd
-      notifications:
-        slack: '#prod-alertscd'
-        email: prod-team@example.comcd
+      kubernetes:
+        primary:
+          cluster: prd-cluster-003cd
+          aws_region: us-east-1cd
+          role_to_assume: arn:aws:iam::111222333444:role/ProdDeployRolecd
+          image:
+            name: my-appcd
+            tag: prod-2025.02.18cd
+          vault:
+            role: prod-vault-rolecd
+            secret_path: secret/data/prodcd
+          notifications:
+            slack: '#prod-alertscd'
+            email: prod-team@example.comcd
